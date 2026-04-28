@@ -8,6 +8,22 @@ module timer(
     output [5:0] state     //6-bits to represent the highest number 59
 );
 
+reg [5:0] count;
+assign state = count;
 
+always @(posedge clk or posedge rst) begin
+    if (rst)
+        count <= 0;
+    else if (load)
+        count <= load_value;
+    else if (en) begin
+        if (count > 0)
+            count <= count - 1;
+        else
+            count <= 0;
+    end
+    else
+        count <= count;
+end
 
 endmodule
