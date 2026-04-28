@@ -1,0 +1,25 @@
+module clk_div
+# (
+   parameter INPUT_FREQ = 100_000_000, // HZ
+   parameter OUTPUT_FREQ = 1
+   )
+   (
+    input iclk,
+    input rst,
+    output reg oclk
+    );
+
+localparam COUNT_MAX = INPUT_FREQ / (2*OUTPUT_FREQ);
+
+localparam WIDTH = (COUNT_MAX > 1) ? $clog2(COUNT_MAx) :1;
+
+reg[WIDTH:0] count;
+
+always @(posedge iclk) begin
+if(rst) begin
+count <= 0;
+oclk <= 0;
+end else begin
+if(count == (COUNT_MAX -1)) begin
+ocount <= 0;
+oclk <= 0;
